@@ -84,6 +84,8 @@ def _proto_gen_impl(ctx):
     args += ["--cpp_out=" + gen_dir]
   if ctx.attr.gen_py:
     args += ["--python_out=" + gen_dir]
+  if ctx.attr.gen_java:
+    args += ["--java_out=" + gen_dir]
 
   inputs = srcs + deps
   if ctx.executable.plugin:
@@ -139,6 +141,7 @@ proto_gen = rule(
         "plugin_options": attr.string_list(),
         "gen_cc": attr.bool(),
         "gen_py": attr.bool(),
+        "gen_java": attr.bool(),
         "outs": attr.output_list(),
     },
     output_to_genfiles = True,

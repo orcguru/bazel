@@ -16,7 +16,16 @@
 
 # Script for building bazel from scratch without bazel
 
-PROTO_FILES=$(ls src/main/protobuf/*.proto src/main/java/com/google/devtools/build/lib/buildeventstream/proto/*.proto)
+PROTO_FILES=$(ls src/main/protobuf/*.proto \
+                src/main/java/com/google/devtools/build/lib/buildeventstream/proto/*.proto \
+                third_party/googleapis/google/api/annotations.proto \
+                third_party/googleapis/google/api/http.proto \
+                third_party/googleapis/google/bytestream/*.proto \
+                third_party/googleapis/google/devtools/build/v1/*.proto \
+                third_party/googleapis/google/devtools/remoteexecution/v1test/*.proto \
+                third_party/googleapis/google/longrunning/*.proto \
+                third_party/googleapis/google/rpc/*.proto \
+                third_party/googleapis/google/watcher/v1/*.proto)
 LIBRARY_JARS=$(find third_party -name '*.jar' | grep -Fv /javac-9-dev-r3297-4.jar | grep -Fv /javac-9-dev-4023-2.jar | grep -Fv /javac7.jar | grep -Fv JavaBuilder | grep -Fv third_party/guava | grep -Fv third_party/guava | grep -ve third_party/grpc/grpc.*jar | tr "\n" " ")
 GRPC_JAVA_VERSION=1.3.0
 GRPC_LIBRARY_JARS=$(find third_party/grpc -name '*.jar' | grep -e .*${GRPC_JAVA_VERSION}.*jar | tr "\n" " ")
@@ -194,7 +203,9 @@ if [ -z "${BAZEL_SKIP_JAVA_COMPILATION}" ]; then
 
         log "Compiling Java stubs for protocol buffers..."
         for f in $PROTO_FILES ; do
-            run "${PROTOC}" -Isrc/main/protobuf/ \
+            run "${PROTOC}" -I. -Isrc/main/protobuf/ \
+                -Ithird_party/googleapis/ \
+                -Ithird_party/protobuf/3.2.0/ \
                 -Isrc/main/java/com/google/devtools/build/lib/buildeventstream/proto/ \
                 --java_out=${OUTPUT_DIR}/src \
                 --plugin=protoc-gen-grpc="${GRPC_JAVA_PLUGIN-}" \

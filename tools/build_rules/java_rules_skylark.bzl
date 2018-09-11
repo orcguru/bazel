@@ -183,7 +183,7 @@ java_library_attrs = {
     "_jdk": attr.label(default=Label("//tools/jdk:jdk"), allow_files=True),
     "data": attr.label_list(allow_files=True, cfg="data"),
     "resources": attr.label_list(allow_files=True),
-    "srcs": attr.label_list(allow_files=java_filetype),
+    "srcs": attr.label_list(allow_files=True),
     "jars": attr.label_list(allow_files=jar_filetype),
     "neverlink_jars": attr.label_list(allow_files=jar_filetype),
     "srcjars": attr.label_list(allow_files=srcjar_filetype),

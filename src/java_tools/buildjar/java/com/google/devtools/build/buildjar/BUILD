@@ -170,6 +170,15 @@ bootstrap_java_library(
     ],
 )
 
+bootstrap_java_library(
+    name = "bootstrap_protos",
+    srcs = ["//src/main/protobuf:bootstrap_proto_srcs"],
+    tags = ["manual"],
+    deps = [
+        ":skylark-deps"
+    ]
+)
+
 bootstrap_java_binary(
     name = "bootstrap_VanillaJavaBuilder",
     srcs = [
