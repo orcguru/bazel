@@ -27,6 +27,8 @@ filegroup(
         "grpc-stub-1.3.0.jar",
         "grpc-core-1.3.0.jar",
         "grpc-context-1.3.0.jar",
+        "opencensus-api-0.11.0.jar",
+        "opencensus-contrib-grpc-metrics-0.11.0.jar",
     ],
 )
 
